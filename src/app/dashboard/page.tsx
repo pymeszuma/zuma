@@ -19,16 +19,12 @@ import {
 import { BarChart3, PieChart, LineChart, Download, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ContentLayout } from '@/components/panel/content-layout';
-import { DynamicBreadcrumb } from '@/components/common/dynamic-breadcrumb';
 
 export default function DashboardPage() {
   const [period, setPeriod] = useState('2023');
 
   return (
-    <ContentLayout title='Inicio' className='px-8 py-2'>
-      <div className='my-5'>
-        <DynamicBreadcrumb />
-      </div>
+    <ContentLayout title='Dashboard' className='px-8 py-2'>
       <div className='container mx-auto py-10'>
         <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8'>
           <div>

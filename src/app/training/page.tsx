@@ -1,24 +1,11 @@
 import type React from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
 import { BookOpen, FileText, Video, Award } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { ContentLayout } from '@/components/panel/content-layout';
-import { DynamicBreadcrumb } from '@/components/common/dynamic-breadcrumb';
+import { TrainingCard } from '@/feature/training/components/training-card';
 
 export default function TrainingPage() {
   return (
-    <ContentLayout title='Inicio' className='px-8 py-2'>
-      <div className='my-5'>
-        <DynamicBreadcrumb />
-      </div>
+    <ContentLayout title='Training' className='px-8 py-2'>
       <div className='container mx-auto py-10'>
         <div className='flex flex-col items-start mb-10'>
           <h1 className='text-3xl font-bold tracking-tight'>
@@ -90,45 +77,3 @@ export default function TrainingPage() {
   );
 }
 
-interface TrainingCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  type: string;
-  duration: string;
-  href: string;
-}
-
-function TrainingCard({
-  title,
-  description,
-  icon,
-  type,
-  duration,
-  href
-}: TrainingCardProps) {
-  return (
-    <Card>
-      <CardHeader>
-        <div className='flex items-center gap-2 mb-2'>
-          {icon}
-          <span className='text-xs font-medium px-2 py-1 rounded-full bg-green-100 text-green-800'>
-            {type}
-          </span>
-        </div>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className='text-sm text-muted-foreground'>
-          <p>Duración: {duration}</p>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button asChild className='w-full'>
-          <Link href={href}>Acceder</Link>
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}

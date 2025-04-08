@@ -2,15 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  BarChart3,
-  BookOpen,
-  Building2,
-  Factory,
-  Home,
-  Leaf,
-  Lightbulb
-} from 'lucide-react';
+import { BarChart3, BookOpen, Building2, Home, Leaf } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +18,7 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 import { ModeToggle } from '@/components/theme/mode-toggle';
+import { sectors } from '@/feature/sectors/constants';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -69,39 +62,27 @@ export function AppSidebar() {
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub>
-              <SidebarMenuSubItem>
-                <SidebarMenuSubButton
-                  asChild
-                  isActive={pathname === '/sectors/energy-mining'}
-                >
-                  <Link href='/sectors/energy-mining'>
-                    <Lightbulb className='h-4 w-4 mr-2' />
-                    Energía y Minería
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-              <SidebarMenuSubItem>
-                <SidebarMenuSubButton
-                  asChild
-                  isActive={pathname === '/sectors/manufacturing'}
-                >
-                  <Link href='/sectors/manufacturing'>
-                    <Factory className='h-4 w-4 mr-2' />
-                    Manufactura
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-              <SidebarMenuSubItem>
-                <SidebarMenuSubButton
-                  asChild
-                  isActive={pathname === '/sectors/services'}
-                >
-                  <Link href='/sectors/services'>
-                    <Building2 className='h-4 w-4 mr-2' />
-                    Servicios
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
+              {sectors.map((sector) => (
+                <SidebarMenuSubItem key={sector.path}>
+                  <SidebarMenuSubButton
+                    asChild
+                    isActive={pathname === sector.path}
+                    className={ !sector.isActive ? 'text-muted-foreground' : undefined }
+                  >
+                    {sector.isActive ? (
+                      <Link href={sector.path} className='truncate'>
+                        {sector.icon}
+                        {sector.title}
+                      </Link>
+                    ) : (
+                      <div className='truncate cursor-not-allowed'>
+                        {sector.icon}
+                        {sector.title}
+                      </div>
+                    )}
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
             </SidebarMenuSub>
           </SidebarMenuItem>
 
@@ -168,6 +149,7 @@ export function AppSidebar() {
               <ModeToggle />
             </div>
           </SidebarMenuItem>
+          {/* AUTH */}
           {/* <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href='/profile'>

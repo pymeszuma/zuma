@@ -1,63 +1,76 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client"
 
-import React from 'react';
+import React from "react"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
-import { usePathname } from 'next/navigation';
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
-export const DynamicBreadcrumb = () => {
-  const pathname = usePathname();
+export function DynamicBreadcrumb() {
+  const pathname = usePathname()
 
-  const pathArray = pathname.split('/').filter(Boolean);
+  // Don't render breadcrumb on homepage
+  if (pathname === "/") return null
 
-  const breadcrumbs = [
-    <BreadcrumbItem key='root'>
-      <BreadcrumbLink href='/'>Inicio</BreadcrumbLink>
-    </BreadcrumbItem>
-  ];
+  // Split the pathname into segments and remove empty strings
+  const segments = pathname.split("/").filter(Boolean)
 
-  // console.log('pathArray: ', pathArray);
-  // add the rest of the breadcrumbs but the last one use the BreadcrumbPage component
-  pathArray.forEach((path, index) => {
-    console.log('path: ', path);
-    if (index === pathArray.length - 1) {
-      breadcrumbs.push(
-        <BreadcrumbItem key={path} className='capitalize'>
-          <BreadcrumbPage>{path.replaceAll('-', ' ')}</BreadcrumbPage>
-        </BreadcrumbItem>
-      );
-    } else if (path === 'envs') {
-      // skip locale
-    } else {
-      breadcrumbs.push(
-        <BreadcrumbItem key={path} className='capitalize'>
-          <BreadcrumbLink href={`/${path}`}>
-            {path.replaceAll('-', ' ')}
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-      );
-    }
-  });
+  // Generate breadcrumb items
+  const breadcrumbItems = [
+    { label: "Inicio", href: "/" },
+    ...segments.map((segment, index) => {
+      // Create the href for this segment (all segments up to this point)
+      const href = `/${segments.slice(0, index + 1).join("/")}`
+
+      // Format the label (capitalize and replace hyphens with spaces)
+      const label = segment
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+
+      return { label, href }
+    }),
+  ]
 
   return (
-    <Breadcrumb className='hidden md:flex'>
+    <Breadcrumb>
       <BreadcrumbList>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <React.Fragment key={index}>
-            {breadcrumb}
-            {index < breadcrumbs.length - 1 && (
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
-            )}
-          </React.Fragment>
-        ))}
+        {breadcrumbItems.map((item, index) => {
+          // Check if this is the last item (current page)
+          const isLastItem = index === breadcrumbItems.length - 1
+
+          return (
+            <React.Fragment key={item.href}>
+              <BreadcrumbItem>
+                {isLastItem ? (
+                  <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={item.href}>
+                      {index === 0 ? (
+                        <span className="flex items-center">
+                          {item.label}
+                        </span>
+                      ) : (
+                        item.label
+                      )}
+                    </Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {!isLastItem && <BreadcrumbSeparator />}
+            </React.Fragment>
+          )
+        })}
       </BreadcrumbList>
     </Breadcrumb>
-  );
-};
+  )
+}

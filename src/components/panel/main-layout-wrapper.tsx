@@ -4,12 +4,14 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/app-sidebar';
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Zuma - Calculadora de Huella de Carbono',
-  description: 'Calculadora de huella de carbono para empresas PYME por sector'
+  description:
+    'Aplicativo informático para evaluar los impactos y avances en sostenibilidad de las pymes según los compromisos de las contribuciones determinadas a nivel nacional (NDC) de Colombia a 2030.'
 };
 
 export default function RootLayout({
@@ -30,6 +32,7 @@ export default function RootLayout({
             <div className='flex min-h-screen'>
               <AppSidebar />
               <main className='flex-1'>{children}</main>
+              <Toaster />
             </div>
           </SidebarProvider>
         </ThemeProvider>
