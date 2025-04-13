@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import React from "react"
+import React from 'react';
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
   Breadcrumb,
@@ -11,41 +11,49 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+  BreadcrumbSeparator
+} from '@/components/ui/breadcrumb';
 
 export function DynamicBreadcrumb() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   // Don't render breadcrumb on homepage
-  if (pathname === "/") return null
+  if (pathname === '/') return null;
 
   // Split the pathname into segments and remove empty strings
-  const segments = pathname.split("/").filter(Boolean)
+  const segments = pathname.split('/').filter(Boolean);
 
   // Generate breadcrumb items
-  const breadcrumbItems = [
-    { label: "Inicio", href: "/" },
-    ...segments.map((segment, index) => {
-      // Create the href for this segment (all segments up to this point)
-      const href = `/${segments.slice(0, index + 1).join("/")}`
+  const breadcrumbItems = (() => {
+    const base = [{ label: 'Inicio', href: '/' }];
 
-      // Format the label (capitalize and replace hyphens with spaces)
+    const dynamicItems = segments.map((segment, index) => {
+      const href = `/${segments.slice(0, index + 1).join('/')}`;
       const label = segment
-        .split("-")
+        .split('-')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
+        .join(' ');
+      return { label, href };
+    });
 
-      return { label, href }
-    }),
-  ]
+    // Si hay más de 4 segmentos, colapsamos los intermedios
+    if (dynamicItems.length > 2) {
+      return [
+        base[0],
+        { label: '...', href: '#' }, // Aquí podrías poner un dropdown en el futuro
+        ...dynamicItems.slice(-2)
+      ];
+    }
+
+    return [...base, ...dynamicItems];
+  })();
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbItems.map((item, index) => {
           // Check if this is the last item (current page)
-          const isLastItem = index === breadcrumbItems.length - 1
+          const isLastItem = index === breadcrumbItems.length - 1;
 
           return (
             <React.Fragment key={item.href}>
@@ -56,9 +64,7 @@ export function DynamicBreadcrumb() {
                   <BreadcrumbLink asChild>
                     <Link href={item.href}>
                       {index === 0 ? (
-                        <span className="flex items-center">
-                          {item.label}
-                        </span>
+                        <span className='flex items-center'>{item.label}</span>
                       ) : (
                         item.label
                       )}
@@ -68,9 +74,9 @@ export function DynamicBreadcrumb() {
               </BreadcrumbItem>
               {!isLastItem && <BreadcrumbSeparator />}
             </React.Fragment>
-          )
+          );
         })}
       </BreadcrumbList>
     </Breadcrumb>
-  )
+  );
 }

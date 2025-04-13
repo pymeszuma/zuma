@@ -44,14 +44,25 @@ export function SectorCard({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
       </div>
-      <CardFooter className='mt-auto'>
+      <CardFooter className='mt-auto flex flex-col gap-1'>
         <Button
           asChild
           variant={active ? 'default' : 'outline'}
           className='w-full'
         >
           {active ? (
-            <Link href={href}>Comenzar</Link>
+            <Link href={`${href}/adaptability`}>Adaptabilidad</Link>
+          ) : (
+            <span className='text-muted-foreground'>Próximamente</span>
+          )}
+        </Button>
+        <Button
+          asChild
+          variant={active ? 'default' : 'outline'}
+          className='w-full'
+        >
+          {active ? (
+            <Link href={`${href}/mitigation`}>Mitigación</Link>
           ) : (
             <span className='text-muted-foreground'>Próximamente</span>
           )}

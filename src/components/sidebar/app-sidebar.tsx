@@ -67,7 +67,9 @@ export function AppSidebar() {
                   <SidebarMenuSubButton
                     asChild
                     isActive={pathname === sector.path}
-                    className={ !sector.isActive ? 'text-muted-foreground' : undefined }
+                    className={
+                      !sector.isActive ? 'text-muted-foreground' : undefined
+                    }
                   >
                     {sector.isActive ? (
                       <Link href={sector.path} className='truncate'>

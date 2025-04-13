@@ -4,7 +4,8 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/app-sidebar';
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from '@/components/ui/sonner';
+import { CSPostHogProvider } from '@/providers/posthog-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,20 +23,22 @@ export default function RootLayout({
   return (
     <html lang='es' suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='light'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider>
-            <div className='flex min-h-screen'>
-              <AppSidebar />
-              <main className='flex-1'>{children}</main>
-              <Toaster />
-            </div>
-          </SidebarProvider>
-        </ThemeProvider>
+        <CSPostHogProvider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='light'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider>
+              <div className='flex min-h-screen'>
+                <AppSidebar />
+                <main className='flex-1'>{children}</main>
+                <Toaster />
+              </div>
+            </SidebarProvider>
+          </ThemeProvider>
+        </CSPostHogProvider>
       </body>
     </html>
   );

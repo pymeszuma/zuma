@@ -1,7 +1,13 @@
-'use client";'
-import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+'use client";';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import Link from 'next/link';
 
 interface ToolCardProps {
   title: string;
@@ -12,7 +18,7 @@ interface ToolCardProps {
 
 export function ToolCard({ title, description, icon, href }: ToolCardProps) {
   return (
-    <Card>
+    <Card className='flex flex-col justify-between h-full'>
       <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           {icon}
@@ -20,7 +26,7 @@ export function ToolCard({ title, description, icon, href }: ToolCardProps) {
         </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardFooter>
+      <CardFooter className='mt-auto'>
         <Button asChild variant='outline' className='w-full'>
           <Link href={href}>Acceder</Link>
         </Button>

@@ -7,13 +7,13 @@ import { sectorForms } from '@/feature/sectors/constants';
 export default function EnergyMiningPage() {
   return (
     <ContentLayout
-      title={sectorForms.energiaMineria.sectorTitle}
+      title={sectorForms.transporteLogistica.sectorTitle}
       className='px-8 py-2'
     >
       <SelectForm
-        surveyTitle={sectorForms.energiaMineria.surveyTitle}
-        surveySubtitle={sectorForms.energiaMineria.surveySubtitle}
-        options={sectorForms.energiaMineria.options}
+        surveyTitle={sectorForms.transporteLogistica.surveyTitle}
+        surveySubtitle={sectorForms.transporteLogistica.surveySubtitle}
+        options={sectorForms.transporteLogistica.options}
       />
     </ContentLayout>
   );

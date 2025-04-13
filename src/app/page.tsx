@@ -24,15 +24,24 @@ export default function Home() {
         <div className='flex flex-col items-center text-center mb-10'>
           <h1 className='text-4xl font-bold tracking-tight'>Zuma</h1>
           <p className='text-sm text-muted-foreground mt-2'>
-            Aplicativo informático para evaluar los impactos y avances en sostenibilidad de las pymes según los compromisos de las contribuciones determinadas a nivel nacional (NDC) de Colombia a 2030.
+            Aplicativo informático para evaluar los impactos y avances en
+            sostenibilidad de las pymes según los compromisos de las
+            contribuciones determinadas a nivel nacional (NDC) de Colombia a
+            2030.
           </p>
         </div>
 
         <Tabs defaultValue='sectors' className='w-full max-w-4xl mx-auto'>
           <TabsList className='grid w-full grid-cols-3'>
-            <TabsTrigger className='cursor-pointer' value='sectors'>Sectores</TabsTrigger>
-            <TabsTrigger className='cursor-pointer' value='tools'>Herramientas</TabsTrigger>
-            <TabsTrigger className='cursor-pointer' value='training'>Capacitación</TabsTrigger>
+            <TabsTrigger className='cursor-pointer' value='sectors'>
+              Sectores
+            </TabsTrigger>
+            <TabsTrigger className='cursor-pointer' value='tools'>
+              Herramientas
+            </TabsTrigger>
+            <TabsTrigger className='cursor-pointer' value='training'>
+              Capacitación
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value='sectors' className='mt-6'>

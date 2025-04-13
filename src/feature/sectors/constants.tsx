@@ -4,7 +4,9 @@ import {
   Factory,
   HandHeart,
   Lightbulb,
-  Tractor
+  Tractor,
+  Leaf,
+  CloudLightning
 } from 'lucide-react';
 
 export const sectors = [
@@ -22,7 +24,7 @@ export const sectors = [
     path: '/sectors/transportation',
     description:
       'Cálculo de huella de carbono para empresas de transporte y logística',
-    isActive: false
+    isActive: true
   },
   {
     title: 'Construcción e Infraestructura',
@@ -57,3 +59,239 @@ export const sectors = [
     isActive: false
   }
 ];
+
+const commonSurveyTitle = 'Encuesta de Acción Climática';
+const commonSurveySubtitle =
+  'Seleccione el tipo de encuesta que desea completar para evaluar las acciones climáticas de su organización.';
+
+export const sectorForms = {
+  energiaMineria: {
+    sectorTitle: 'Energía y Minería',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description:
+          'Evaluación de acciones para reducir emisiones de gases de efecto invernadero',
+        content:
+          'Este formulario evalúa las acciones que su organización está tomando para reducir su huella de carbono y mitigar el cambio climático.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Reducción de emisiones',
+          'Eficiencia energética',
+          'Transición a energías limpias'
+        ],
+        color: 'green',
+        url: '/sectors/energy-mining/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description:
+          'Evaluación de medidas para adaptarse a los efectos del cambio climático',
+        content:
+          'Este formulario evalúa cómo su organización se está preparando para los impactos del cambio climático.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Gestión de riesgos climáticos',
+          'Resiliencia ante eventos extremos',
+          'Adaptación de infraestructura'
+        ],
+        color: 'blue',
+        url: '/sectors/energy-mining/adaptability'
+      }
+    ]
+  },
+
+  transporteLogistica: {
+    sectorTitle: 'Transporte y Logística',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description: 'Reducción de emisiones en movilidad y transporte',
+        content:
+          'Evaluación de esfuerzos para disminuir emisiones del parque vehicular, optimización de rutas y uso de combustibles limpios.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Uso de vehículos eléctricos',
+          'Optimización logística',
+          'Combustibles alternativos'
+        ],
+        color: 'green',
+        url: '/sectors/transportation/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description: 'Preparación ante eventos climáticos extremos',
+        content:
+          'Medidas para proteger infraestructura de transporte y continuidad operativa ante inundaciones u otros fenómenos.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Planes de contingencia',
+          'Infraestructura resiliente',
+          'Gestión de rutas críticas'
+        ],
+        color: 'blue',
+        url: '/sectors/transportation/adaptability'
+      }
+    ]
+  },
+
+  construccionInfraestructura: {
+    sectorTitle: 'Construcción e Infraestructura',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description: 'Construcción sostenible y reducción de emisiones',
+        content:
+          'Evaluación del uso de materiales sostenibles, eficiencia energética y prácticas bajas en carbono.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Diseño pasivo',
+          'Materiales reciclados',
+          'Gestión energética de obra'
+        ],
+        color: 'green',
+        url: '/sectors/energy-mining/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description: 'Diseño de infraestructura resiliente al clima',
+        content:
+          'Medidas para asegurar que edificaciones resistan condiciones climáticas futuras.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Infraestructura resiliente',
+          'Sistemas de drenaje eficientes',
+          'Diseño con proyección climática'
+        ],
+        color: 'blue',
+        url: '/sectors/energy-mining/adaptability'
+      }
+    ]
+  },
+
+  industrialManufacturero: {
+    sectorTitle: 'Industrial y Manufacturero',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description: 'Optimización de procesos industriales',
+        content:
+          'Acciones para mejorar eficiencia energética y reducir emisiones en procesos de manufactura.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Procesos energéticamente eficientes',
+          'Uso de energía renovable',
+          'Reducción de residuos'
+        ],
+        color: 'green',
+        url: '/sectors/energy-mining/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description: 'Adaptación de la producción ante variabilidad climática',
+        content:
+          'Planes para mantener la operación y el abastecimiento ante eventos climáticos extremos.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Gestión de cadena de suministro',
+          'Protección de instalaciones',
+          'Planes de continuidad operativa'
+        ],
+        color: 'blue',
+        url: '/sectors/energy-mining/adaptability'
+      }
+    ]
+  },
+
+  agropecuarioForestal: {
+    sectorTitle: 'Agropecuario y Forestal',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description: 'Prácticas sostenibles en agricultura y silvicultura',
+        content:
+          'Evaluación de prácticas que reducen emisiones como agricultura regenerativa y manejo de suelos.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Captura de carbono en suelos',
+          'Reducción de uso de fertilizantes',
+          'Reforestación'
+        ],
+        color: 'green',
+        url: '/sectors/energy-mining/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description: 'Resiliencia agroforestal ante cambios climáticos',
+        content:
+          'Medidas para enfrentar sequías, plagas y eventos climáticos extremos en cultivos y bosques.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Manejo de cultivos resistentes',
+          'Tecnologías de riego',
+          'Prevención de incendios forestales'
+        ],
+        color: 'blue',
+        url: '/sectors/energy-mining/adaptability'
+      }
+    ]
+  },
+
+  serviciosComercio: {
+    sectorTitle: 'Servicios y Comercio',
+    surveyTitle: commonSurveyTitle,
+    surveySubtitle: commonSurveySubtitle,
+    options: [
+      {
+        id: 'mitigacion',
+        title: 'Mitigación',
+        description: 'Reducción de huella operativa y energética',
+        content:
+          'Evaluación de acciones como digitalización, eficiencia energética en oficinas y logística verde.',
+        icon: <Leaf className='h-6 w-6 text-green-600' />,
+        bullets: [
+          'Uso eficiente de recursos',
+          'Digitalización de procesos',
+          'Reducción de viajes y logística sostenible'
+        ],
+        color: 'green',
+        url: '/sectors/energy-mining/mitigation'
+      },
+      {
+        id: 'adaptabilidad',
+        title: 'Adaptabilidad',
+        description: 'Continuidad del servicio ante eventos climáticos',
+        content:
+          'Estrategias para mantener la operación y atender a los clientes durante crisis climáticas.',
+        icon: <CloudLightning className='h-6 w-6 text-blue-600' />,
+        bullets: [
+          'Planes de resiliencia empresarial',
+          'Protección de infraestructuras críticas',
+          'Comunicación en crisis'
+        ],
+        color: 'blue',
+        url: '/sectors/energy-mining/adaptability'
+      }
+    ]
+  }
+};
