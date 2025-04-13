@@ -1,20 +1,8 @@
 'use client';
 
-import {
-  PieChart,
-  Pie,
-  Label as ChartLabel,
-  ResponsiveContainer
-} from 'recharts';
+import { PieChart, Pie } from 'recharts';
 import { useState, useMemo, JSX } from 'react';
-import {
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  HelpCircle,
-  Lightbulb
-} from 'lucide-react';
-import Image from 'next/image';
+import { AlertCircle, CheckCircle2, Clock, HelpCircle } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -24,12 +12,6 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
@@ -68,7 +50,7 @@ export function SurveyCard({
     const start = currentPage * questionsPerPage;
     const end = start + questionsPerPage;
     return questions.slice(start, end);
-  }, [currentPage, questions]);
+  }, [currentPage, questions, questionsPerPage]);
 
   const handleAnswer = (questionId: number, value: string) => {
     const newAnswers = [...answers];
@@ -136,8 +118,10 @@ export function SurveyCard({
 
   if (isSubmitted) {
     const noAnswered = getNoAnsweredQuestions();
-    const maxScore = questions.length;
-    const scorePct = (score / maxScore) * 100;
+    const maxWithoutNoAplica = answers.filter(
+      (a) => a.value !== 'No Aplica'
+    ).length;
+    const scorePct = (score / maxWithoutNoAplica) * 100;
 
     const answerCounts = {
       Si: answers.filter((a) => a.value === 'Si').length,

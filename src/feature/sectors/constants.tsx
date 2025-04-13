@@ -1,12 +1,11 @@
 import {
-  Car,
-  Drill,
   Factory,
   HandHeart,
   Lightbulb,
-  Tractor,
   Leaf,
-  CloudLightning
+  CloudLightning,
+  Truck,
+  HardHat
 } from 'lucide-react';
 
 export const sectors = [
@@ -20,7 +19,7 @@ export const sectors = [
   },
   {
     title: 'Transporte y Logística',
-    icon: <Car className='h-10 w-10' />,
+    icon: <Truck className='h-10 w-10' />,
     path: '/sectors/transportation',
     description:
       'Cálculo de huella de carbono para empresas de transporte y logística',
@@ -28,7 +27,7 @@ export const sectors = [
   },
   {
     title: 'Construcción e Infraestructura',
-    icon: <Drill className='h-10 w-10' />,
+    icon: <HardHat className='h-10 w-10' />,
     path: '/sectors/construction',
     description:
       'Cálculo de huella de carbono para empresas de construcción e infraestructura',
@@ -44,7 +43,7 @@ export const sectors = [
   },
   {
     title: 'Agropecuario y Forestal',
-    icon: <Tractor className='h-10 w-10' />,
+    icon: <Leaf className='h-10 w-10' />,
     path: '/sectors/agriculture',
     description:
       'Cálculo de huella de carbono para empresas agropecuarias y forestales',
@@ -293,5 +292,44 @@ export const sectorForms = {
         url: '/sectors/energy-mining/adaptability'
       }
     ]
+  }
+};
+
+export const sectorLabels: Record<string, string> = {
+  'sector-1': 'Energía y Minería',
+  'sector-2': 'Transporte y Logística',
+  'sector-3': 'Construcción e Infraestructura',
+  'sector-4': 'Industrial y Manufacturero',
+  'sector-5': 'Agropecuario y Forestal',
+  'sector-6': 'Servicios y Comercio'
+};
+
+export const SECTOR_METADATA: Record<
+  string,
+  { name: string; icon: React.ReactNode }
+> = {
+  'sector-1': {
+    name: sectorLabels['sector-1'],
+    icon: <Lightbulb className='h-10 w-10 mb-2 text-amber-500' />
+  },
+  'sector-2': {
+    name: sectorLabels['sector-2'],
+    icon: <Truck className='h-10 w-10 mb-2 text-blue-500' />
+  },
+  'sector-3': {
+    name: sectorLabels['sector-3'],
+    icon: <HardHat className='h-10 w-10 mb-2 text-orange-500' />
+  },
+  'sector-4': {
+    name: sectorLabels['sector-4'],
+    icon: <Factory className='h-10 w-10 mb-2 text-purple-500' />
+  },
+  'sector-5': {
+    name: sectorLabels['sector-5'],
+    icon: <Leaf className='h-10 w-10 mb-2 text-green-500' />
+  },
+  'sector-6': {
+    name: sectorLabels['sector-6'],
+    icon: <HandHeart className='h-10 w-10 mb-2 text-cyan-500' />
   }
 };

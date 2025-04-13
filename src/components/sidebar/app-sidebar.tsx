@@ -19,6 +19,9 @@ import {
 } from '@/components/ui/sidebar';
 import { ModeToggle } from '@/components/theme/mode-toggle';
 import { sectors } from '@/feature/sectors/constants';
+import packageJson from '@/../package.json';
+
+const applicationVersion = packageJson?.version ?? '0.0.0';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -34,7 +37,12 @@ export function AppSidebar() {
                 <Leaf className='h-6 w-6 text-green-600' />
               </div>
               {sidebarState === 'expanded' && (
-                <span className='text-xl font-semibold'>ZUMA</span>
+                <>
+                  <span className='text-xl font-semibold'>ZUMA</span>
+                  <span className='text-xs text-muted-foreground'>
+                    {` v${applicationVersion}`}
+                  </span>
+                </>
               )}
             </div>
           </Link>
