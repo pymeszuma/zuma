@@ -93,7 +93,7 @@ const QUADRANT_COLORS = [
   'rgb(224, 224, 224)', // Gris pastel para Prioridad baja (Cuadrante III)
   'rgb(227, 242, 253)', // Azul super claro pastel para Prioridad media (Cuadrante II)
   'rgb(227, 242, 253)', // Azul super claro pastel para Prioridad media (Cuadrante IV)
-  'rgb(187, 222, 251)'  // Azul claro pastel para Prioridad alta (Cuadrante I)
+  'rgb(187, 222, 251)' // Azul claro pastel para Prioridad alta (Cuadrante I)
 ];
 
 export default function MaterialityMatrix({
@@ -513,7 +513,14 @@ export default function MaterialityMatrix({
               />
 
               {/* Quadrant labels */}
-              <ReferenceArea fill={QUADRANT_COLORS[0]} fillOpacity={0.5} x1={0} x2={2.5} y1={0} y2={2.5}>
+              <ReferenceArea
+                fill={QUADRANT_COLORS[0]}
+                fillOpacity={0.5}
+                x1={0}
+                x2={2.5}
+                y1={0}
+                y2={2.5}
+              >
                 <Label
                   value='Baja'
                   position='center'
@@ -521,7 +528,14 @@ export default function MaterialityMatrix({
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fill={QUADRANT_COLORS[1]} fillOpacity={0.5} x1={0} x2={2.5} y1={2.5} y2={5}>
+              <ReferenceArea
+                fill={QUADRANT_COLORS[1]}
+                fillOpacity={0.5}
+                x1={0}
+                x2={2.5}
+                y1={2.5}
+                y2={5}
+              >
                 <Label
                   value='Media'
                   position='center'
@@ -529,7 +543,14 @@ export default function MaterialityMatrix({
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fill={QUADRANT_COLORS[2]} fillOpacity={0.5} x1={2.5} x2={5} y1={0} y2={2.5}>
+              <ReferenceArea
+                fill={QUADRANT_COLORS[2]}
+                fillOpacity={0.5}
+                x1={2.5}
+                x2={5}
+                y1={0}
+                y2={2.5}
+              >
                 <Label
                   value='Media'
                   position='center'
@@ -537,7 +558,14 @@ export default function MaterialityMatrix({
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fill={QUADRANT_COLORS[3]} fillOpacity={0.7} x1={2.5} x2={5} y1={2.5} y2={5}>
+              <ReferenceArea
+                fill={QUADRANT_COLORS[3]}
+                fillOpacity={0.7}
+                x1={2.5}
+                x2={5}
+                y1={2.5}
+                y2={5}
+              >
                 <Label
                   value='Alta'
                   position='center'
