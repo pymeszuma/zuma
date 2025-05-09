@@ -76,10 +76,10 @@ const CATEGORY_LABELS = {
 };
 
 const QUADRANT_LABELS = [
-  'Cuadrante III (Baja prioridad)',
-  'Cuadrante II (Prioridad para grupos de interés)',
-  'Cuadrante IV (Prioridad para la empresa)',
-  'Cuadrante I (Alta prioridad)'
+  'Cuadrante III (Prioridad baja)',
+  'Cuadrante II (Prioridad media)',
+  'Cuadrante IV (Prioridad media)',
+  'Cuadrante I (Prioridad alta)'
 ];
 
 const QUADRANT_DESCRIPTIONS = [
@@ -90,10 +90,10 @@ const QUADRANT_DESCRIPTIONS = [
 ];
 
 const QUADRANT_COLORS = [
-  'rgba(203, 213, 225, 0.1)',
-  'rgba(96, 165, 250, 0.1)',
-  'rgba(251, 146, 60, 0.1)',
-  'rgba(34, 197, 94, 0.1)'
+  'rgb(224, 224, 224)', // Gris pastel para Prioridad baja (Cuadrante III)
+  'rgb(227, 242, 253)', // Azul super claro pastel para Prioridad media (Cuadrante II)
+  'rgb(227, 242, 253)', // Azul super claro pastel para Prioridad media (Cuadrante IV)
+  'rgb(187, 222, 251)'  // Azul claro pastel para Prioridad alta (Cuadrante I)
 ];
 
 export default function MaterialityMatrix({
@@ -287,7 +287,7 @@ export default function MaterialityMatrix({
         width={width}
         height={height}
         fill={fill}
-        fillOpacity={0.4}
+        fillOpacity={0.5}
       />
     );
   };
@@ -513,33 +513,33 @@ export default function MaterialityMatrix({
               />
 
               {/* Quadrant labels */}
-              <ReferenceArea fillOpacity={0} x1={0} x2={2.5} y1={0} y2={2.5}>
+              <ReferenceArea fill={QUADRANT_COLORS[0]} fillOpacity={0.5} x1={0} x2={2.5} y1={0} y2={2.5}>
                 <Label
-                  value='Cuadrante III'
+                  value='Baja'
                   position='center'
                   offset={10}
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fillOpacity={0} x1={0} x2={2.5} y1={2.5} y2={5}>
+              <ReferenceArea fill={QUADRANT_COLORS[1]} fillOpacity={0.5} x1={0} x2={2.5} y1={2.5} y2={5}>
                 <Label
-                  value='Cuadrante II'
+                  value='Media'
                   position='center'
                   offset={10}
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fillOpacity={0} x1={2.5} x2={5} y1={0} y2={2.5}>
+              <ReferenceArea fill={QUADRANT_COLORS[2]} fillOpacity={0.5} x1={2.5} x2={5} y1={0} y2={2.5}>
                 <Label
-                  value='Cuadrante IV'
+                  value='Media'
                   position='center'
                   offset={10}
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
                 />
               </ReferenceArea>
-              <ReferenceArea fillOpacity={0} x1={2.5} x2={5} y1={2.5} y2={5}>
+              <ReferenceArea fill={QUADRANT_COLORS[3]} fillOpacity={0.7} x1={2.5} x2={5} y1={2.5} y2={5}>
                 <Label
-                  value='Cuadrante I'
+                  value='Alta'
                   position='center'
                   offset={10}
                   style={{ fill: themeColors.mutedForeground, fontSize: 12 }}
@@ -631,7 +631,7 @@ export default function MaterialityMatrix({
 
       {/* Legend of Topics */}
       <div className='mt-4'>
-        <h3 className='font-bold text-lg mb-4'>Leyenda de temas</h3>
+        <h3 className='font-bold text-lg mb-4'>Temas</h3>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm'>
           {chartData.map((point) => (
             <div
