@@ -22,7 +22,23 @@ export default function Home() {
       {/* CONTENT */}
       <div className='container mx-auto py-10'>
         <div className='flex flex-col items-center text-center mb-10'>
-          <h1 className='text-4xl font-bold tracking-tight'>Zuma</h1>
+          <h1 className='text-4xl font-bold tracking-tight'>
+            <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+              Z
+            </span>
+            <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+              U
+            </span>
+            <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+              M
+            </span>
+            <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+              A
+            </span>
+          </h1>
+          <p className='text-sm text-muted-foreground mt-2'>
+            El impulso sostenible para tu PyME
+          </p>
           <p className='text-sm text-muted-foreground mt-2'>
             Aplicativo informático para evaluar los impactos y avances en
             sostenibilidad de las pymes según los compromisos de las
@@ -69,31 +85,32 @@ export default function Home() {
                   <ul className='space-y-2'>
                     <li className='p-2 rounded hover:bg-muted'>
                       <Link
-                        href='/training/introduction'
+                        href='/training/modulo-1'
                         className='flex items-center gap-2'
                       >
                         <span className='font-medium'>
-                          Introducción a la Huella de Carbono
+                          Módulo 1: Fundamentos de Sostenibilidad Empresarial
                         </span>
                       </Link>
                     </li>
                     <li className='p-2 rounded hover:bg-muted'>
                       <Link
-                        href='/training/measurement'
+                        href='/training/modulo-2'
                         className='flex items-center gap-2'
                       >
                         <span className='font-medium'>
-                          Metodologías de Medición
+                          Módulo 2: Consumo Responsable y Producción Sostenible
                         </span>
                       </Link>
                     </li>
                     <li className='p-2 rounded hover:bg-muted'>
                       <Link
-                        href='/training/reduction'
+                        href='/training/modulo-3'
                         className='flex items-center gap-2'
                       >
                         <span className='font-medium'>
-                          Estrategias de Reducción
+                          Módulo 3: Enfrentando el Cambio Climático Desarrollo
+                          Regenerativo
                         </span>
                       </Link>
                     </li>

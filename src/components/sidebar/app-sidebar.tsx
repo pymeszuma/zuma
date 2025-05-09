@@ -34,12 +34,25 @@ export function AppSidebar() {
           <Link href='/' className='flex items-baseline justify-center w-full'>
             <div className='flex items-center gap-2'>
               <div className='flex h-8 w-8 items-center justify-center rounded'>
-                <Leaf className='h-6 w-6 text-green-600' />
+                <img src='/zuma-logo.png' alt='Zuma Logo' className='h-8 w-8' />
               </div>
               {sidebarState === 'expanded' && (
                 <>
-                  <span className='text-xl font-semibold'>ZUMA</span>
-                  <span className='text-xs text-muted-foreground'>
+                  <span className='text-xl font-semibold'>
+                    <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+                      Z
+                    </span>
+                    <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+                      U
+                    </span>
+                    <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+                      M
+                    </span>
+                    <span className='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text'>
+                      A
+                    </span>
+                  </span>
+                  <span className='text-xs text-muted-foreground text-italic'>
                     {` v${applicationVersion}`}
                   </span>
                 </>
@@ -138,7 +151,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
 
-          <SidebarMenuItem>
+          {/* <SidebarMenuItem>
             <SidebarMenuButton
               asChild
               isActive={pathname?.startsWith('/dashboard')}
@@ -146,6 +159,17 @@ export function AppSidebar() {
               <Link href='/dashboard'>
                 <BarChart3 className='h-4 w-4' />
                 <span>Dashboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem> */}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname?.startsWith('/references')}
+            >
+              <Link href='/references'>
+                <BookOpen className='h-4 w-4' />
+                <span>Referencias</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

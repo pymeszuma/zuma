@@ -109,7 +109,67 @@ export default function MaterialityAssessment() {
               <CardHeader>
                 <CardTitle>{sectorLabels[selectedSector]}</CardTitle>
                 <CardDescription>
-                  Evalúe la importancia de cada tema en una escala de 0 a 5
+                  Evalúe la importancia de cada tema en una escala de 1 a 5
+                  <table className='w-full mt-4 text-sm text-left'>
+                    <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                      <tr>
+                        <th scope='col' className='px-6 py-3'>
+                          Nivel de Importancia
+                        </th>
+                        <th scope='col' className='px-6 py-3'>
+                          Interpretación del Puntaje
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                        <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          1 - Muy bajo
+                        </td>
+                        <td className='px-6 py-4'>
+                          El tema o criterio está ausente o es irrelevante para
+                          el sector. No aporta valor ni orientación útil.
+                        </td>
+                      </tr>
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                        <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          2 - Bajo
+                        </td>
+                        <td className='px-6 py-4'>
+                          Se menciona superficialmente, pero no está bien
+                          desarrollado ni adaptado a la realidad del sector.
+                        </td>
+                      </tr>
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                        <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          3 - Aceptable
+                        </td>
+                        <td className='px-6 py-4'>
+                          Tiene un enfoque general adecuado, pero le falta
+                          profundidad, contextualización o aplicabilidad.
+                        </td>
+                      </tr>
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                        <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          4 - Bueno
+                        </td>
+                        <td className='px-6 py-4'>
+                          Está bien formulado, es útil para el sector y permite
+                          tomar decisiones, aunque aún puede fortalecerse.
+                        </td>
+                      </tr>
+                      <tr className='bg-white dark:bg-gray-800'>
+                        <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          5 - Excelente
+                        </td>
+                        <td className='px-6 py-4'>
+                          Altamente relevante, contextualizado y claro.
+                          Proporciona orientación precisa y aplicable de forma
+                          directa.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </CardDescription>
               </CardHeader>
               <CardContent>

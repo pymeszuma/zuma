@@ -158,8 +158,7 @@ export function Recommendations({ noAnswered }: RecommendationsProps) {
                             <Image
                               src={
                                 recommendation.ods_url_image ||
-                                '/placeholder.svg?height=64&width=64' ||
-                                '/placeholder.svg'
+                                'https://mvmqtbdmqnqbejeyeruu.supabase.co/storage/v1/object/public/ods//13.png'
                               }
                               alt={`ODS ${recommendation.ods_id}`}
                               fill

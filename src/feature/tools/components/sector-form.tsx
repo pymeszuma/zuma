@@ -168,13 +168,13 @@ export default function SectorForm({
                     onChange={(e) =>
                       handleRatingChange(tema, 'empresaRating', e.target.value)
                     }
-                    placeholder='0.0 - 5.0'
+                    placeholder='1.0 - 5.0'
                   />
                 </div>
               </div>
               <div className='flex justify-between text-xs text-muted-foreground'>
-                <span>Baja importancia (0.0)</span>
-                <span>Alta importancia (5.0)</span>
+                <span>Muy bajo (1.0)</span>
+                <span>Excelente (5.0)</span>
               </div>
             </div>
 
@@ -206,13 +206,13 @@ export default function SectorForm({
                     onChange={(e) =>
                       handleRatingChange(tema, 'interesRating', e.target.value)
                     }
-                    placeholder='0.0 - 5.0'
+                    placeholder='1.0 - 5.0'
                   />
                 </div>
               </div>
               <div className='flex justify-between text-xs text-muted-foreground'>
-                <span>Baja importancia (0.0)</span>
-                <span>Alta importancia (5.0)</span>
+                <span>Muy bajo (1.0)</span>
+                <span>Excelente (5.0)</span>
               </div>
             </div>
           </div>

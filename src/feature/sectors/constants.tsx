@@ -14,7 +14,7 @@ export const sectors = [
     icon: <Lightbulb className='h-10 w-10' />,
     path: '/sectors/energy-mining',
     description:
-      'Cálculo de huella de carbono para empresas del sector energético y minero',
+      'Evalúa cómo tu empresa del sector energético o minero está enfrentando el cambio climático, identificando acciones para reducir impactos y adaptarse a nuevos riesgos.',
     isActive: true
   },
   {
@@ -22,7 +22,7 @@ export const sectors = [
     icon: <Truck className='h-10 w-10' />,
     path: '/sectors/transportation',
     description:
-      'Cálculo de huella de carbono para empresas de transporte y logística',
+      'Conoce cómo tu empresa de transporte o logística puede contribuir a la acción climática, mejorando procesos y preparándose frente a los efectos del clima.',
     isActive: true
   },
   {
@@ -30,7 +30,7 @@ export const sectors = [
     icon: <HardHat className='h-10 w-10' />,
     path: '/sectors/construction',
     description:
-      'Cálculo de huella de carbono para empresas de construcción e infraestructura',
+      'Explora cómo las empresas del sector construcción pueden avanzar hacia un futuro más sostenible y resiliente ante el cambio climático',
     isActive: false
   },
   {
@@ -38,7 +38,7 @@ export const sectors = [
     icon: <Factory className='h-10 w-10' />,
     path: '/sectors/manufacturing',
     description:
-      'Cálculo de huella de carbono para empresas industriales y manufactureras',
+      'Identifica cómo tu empresa industrial o manufacturera puede mejorar su impacto climático y adoptar prácticas más sostenibles.',
     isActive: false
   },
   {
@@ -46,7 +46,7 @@ export const sectors = [
     icon: <Leaf className='h-10 w-10' />,
     path: '/sectors/agriculture',
     description:
-      'Cálculo de huella de carbono para empresas agropecuarias y forestales',
+      'Conoce cómo las empresas pueden adaptarse al cambio climático y reducir su huella ambiental.',
     isActive: false
   },
   {
@@ -54,7 +54,7 @@ export const sectors = [
     icon: <HandHeart className='h-10 w-10' />,
     path: '/sectors/services',
     description:
-      'Cálculo de huella de carbono para empresas de servicios y comercio',
+      'Evalúa cómo las empresas de servicios y comercio pueden sumarse a la acción climática y responder a las nuevas demandas del mercado sostenible',
     isActive: false
   }
 ];
@@ -86,8 +86,8 @@ export const sectorForms = {
         url: '/sectors/energy-mining/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description:
           'Evaluación de medidas para adaptarse a los efectos del cambio climático',
         content:
@@ -125,8 +125,8 @@ export const sectorForms = {
         url: '/sectors/transportation/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description: 'Preparación ante eventos climáticos extremos',
         content:
           'Medidas para proteger infraestructura de transporte y continuidad operativa ante inundaciones u otros fenómenos.',
@@ -163,8 +163,8 @@ export const sectorForms = {
         url: '/sectors/energy-mining/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description: 'Diseño de infraestructura resiliente al clima',
         content:
           'Medidas para asegurar que edificaciones resistan condiciones climáticas futuras.',
@@ -201,8 +201,8 @@ export const sectorForms = {
         url: '/sectors/energy-mining/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description: 'Adaptación de la producción ante variabilidad climática',
         content:
           'Planes para mantener la operación y el abastecimiento ante eventos climáticos extremos.',
@@ -239,8 +239,8 @@ export const sectorForms = {
         url: '/sectors/energy-mining/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description: 'Resiliencia agroforestal ante cambios climáticos',
         content:
           'Medidas para enfrentar sequías, plagas y eventos climáticos extremos en cultivos y bosques.',
@@ -277,8 +277,8 @@ export const sectorForms = {
         url: '/sectors/energy-mining/mitigation'
       },
       {
-        id: 'adaptabilidad',
-        title: 'Adaptabilidad',
+        id: 'adaptación',
+        title: 'Adaptación',
         description: 'Continuidad del servicio ante eventos climáticos',
         content:
           'Estrategias para mantener la operación y atender a los clientes durante crisis climáticas.',

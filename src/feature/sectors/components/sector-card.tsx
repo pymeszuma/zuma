@@ -41,7 +41,7 @@ export function SectorCard({
               </span>
             )}
           </CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription className='text-xs'>{description}</CardDescription>
         </CardHeader>
       </div>
       <CardFooter className='mt-auto flex flex-col gap-1'>
@@ -51,7 +51,7 @@ export function SectorCard({
           className='w-full'
         >
           {active ? (
-            <Link href={`${href}/adaptability`}>Adaptabilidad</Link>
+            <Link href={`${href}/adaptability`}>Adaptación</Link>
           ) : (
             <span className='text-muted-foreground'>Próximamente</span>
           )}
