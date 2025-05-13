@@ -6,6 +6,7 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { CSPostHogProvider } from '@/providers/posthog-provider';
+import { PymesMiddleware } from '@/components/pymes/middleware';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,13 +31,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider>
-              <div className='flex min-h-screen'>
-                <AppSidebar />
-                <main className='flex-1'>{children}</main>
-                <Toaster />
-              </div>
-            </SidebarProvider>
+            <PymesMiddleware>
+              <SidebarProvider>
+                <div className='flex min-h-screen'>
+                  <AppSidebar />
+                  <main className='flex-1'>{children}</main>
+                  <Toaster />
+                </div>
+              </SidebarProvider>
+            </PymesMiddleware>
           </ThemeProvider>
         </CSPostHogProvider>
       </body>

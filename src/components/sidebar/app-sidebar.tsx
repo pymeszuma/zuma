@@ -20,6 +20,7 @@ import {
 import { ModeToggle } from '@/components/theme/mode-toggle';
 import { sectors } from '@/feature/sectors/constants';
 import packageJson from '@/../package.json';
+import { EditZumaDataButton } from '@/components/pymes/edit-zuma-data-button';
 
 const applicationVersion = packageJson?.version ?? '0.0.0';
 
@@ -177,9 +178,10 @@ export function AppSidebar() {
       </SidebarContent>
       {/* Footer */}
       <SidebarFooter className='border-t'>
+        <EditZumaDataButton />
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className='px-1 py-2'>
+            <div className='px-1 pb-2'>
               <ModeToggle />
             </div>
           </SidebarMenuItem>
