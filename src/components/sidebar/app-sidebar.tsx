@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { BarChart3, BookOpen, Building2, Home, Leaf } from 'lucide-react';
+import { BookOpen, Building2, Home, Leaf } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -35,7 +36,13 @@ export function AppSidebar() {
           <Link href='/' className='flex items-baseline justify-center w-full'>
             <div className='flex items-center gap-2'>
               <div className='flex h-8 w-8 items-center justify-center rounded'>
-                <img src='/zuma-logo.png' alt='Zuma Logo' className='h-8 w-8' />
+                <Image
+                  src='/zuma-logo.png'
+                  alt='Zuma Logo'
+                  width={32}
+                  height={32}
+                  priority
+                />
               </div>
               {sidebarState === 'expanded' && (
                 <>

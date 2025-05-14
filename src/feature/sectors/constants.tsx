@@ -47,7 +47,7 @@ export const sectors = [
     path: '/sectors/agriculture',
     description:
       'Conoce cómo las empresas pueden adaptarse al cambio climático y reducir su huella ambiental.',
-    isActive: false
+    isActive: true
   },
   {
     title: 'Servicios y Comercio',
@@ -236,7 +236,7 @@ export const sectorForms = {
           'Reforestación'
         ],
         color: 'green',
-        url: '/sectors/energy-mining/mitigation'
+        url: '/sectors/agriculture/mitigation'
       },
       {
         id: 'adaptación',
@@ -251,7 +251,7 @@ export const sectorForms = {
           'Prevención de incendios forestales'
         ],
         color: 'blue',
-        url: '/sectors/energy-mining/adaptability'
+        url: '/sectors/agriculture/adaptability'
       }
     ]
   },
