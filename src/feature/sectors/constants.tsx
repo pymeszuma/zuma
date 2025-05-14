@@ -31,7 +31,7 @@ export const sectors = [
     path: '/sectors/construction',
     description:
       'Explora cómo las empresas del sector construcción pueden avanzar hacia un futuro más sostenible y resiliente ante el cambio climático',
-    isActive: false
+    isActive: true
   },
   {
     title: 'Industrial y Manufacturero',
@@ -39,7 +39,7 @@ export const sectors = [
     path: '/sectors/manufacturing',
     description:
       'Identifica cómo tu empresa industrial o manufacturera puede mejorar su impacto climático y adoptar prácticas más sostenibles.',
-    isActive: false
+    isActive: true
   },
   {
     title: 'Agropecuario y Forestal',
@@ -160,7 +160,7 @@ export const sectorForms = {
           'Gestión energética de obra'
         ],
         color: 'green',
-        url: '/sectors/energy-mining/mitigation'
+        url: '/sectors/construction/mitigation'
       },
       {
         id: 'adaptación',
@@ -175,7 +175,7 @@ export const sectorForms = {
           'Diseño con proyección climática'
         ],
         color: 'blue',
-        url: '/sectors/energy-mining/adaptability'
+        url: '/sectors/construction/adaptability'
       }
     ]
   },
@@ -198,7 +198,7 @@ export const sectorForms = {
           'Reducción de residuos'
         ],
         color: 'green',
-        url: '/sectors/energy-mining/mitigation'
+        url: '/sectors/manufacturing/mitigation'
       },
       {
         id: 'adaptación',
@@ -213,7 +213,7 @@ export const sectorForms = {
           'Planes de continuidad operativa'
         ],
         color: 'blue',
-        url: '/sectors/energy-mining/adaptability'
+        url: '/sectors/manufacturing/adaptability'
       }
     ]
   },

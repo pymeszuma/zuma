@@ -24,6 +24,7 @@ export type ZumaFormData = {
   nombreEmpresa: string;
   nit?: string;
   sectorEconomico?: string;
+  sectorEconomicoOtro?: string;
   subsector?: string;
   cantidadEmpleados?: string;
   departamento?: string;

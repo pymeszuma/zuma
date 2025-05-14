@@ -88,6 +88,7 @@ export function ZumaFormDialog({
     nombreEmpresa: '',
     nit: '',
     sectorEconomico: '',
+    sectorEconomicoOtro: '',
     subsector: '',
     cantidadEmpleados: '',
     departamento: '',
@@ -105,17 +106,37 @@ export function ZumaFormDialog({
   const [localFormData, setLocalFormData] =
     useState<ZumaFormData>(defaultFormData);
   const [errors, setErrors] = useState<{ nombreEmpresa?: string }>({});
+  const [showOtherSectorInput, setShowOtherSectorInput] = useState(false);
 
   // Update localFormData when initialData or formData changes
   useEffect(() => {
     if (initialData) {
       setLocalFormData({ ...defaultFormData, ...initialData });
+      // Check if we should show the "Other" sector input
+      setShowOtherSectorInput(initialData.sectorEconomico === 'Otro');
     } else if (formData) {
       setLocalFormData({ ...defaultFormData, ...formData });
+      // Check if we should show the "Other" sector input
+      setShowOtherSectorInput(formData.sectorEconomico === 'Otro');
     }
   }, [initialData, formData]);
 
   const handleChange = (field: keyof ZumaFormData, value: string) => {
+    // If changing sector and selecting/deselecting "Otro"
+    if (field === 'sectorEconomico') {
+      setShowOtherSectorInput(value === 'Otro');
+
+      // If switching away from "Otro", clear the custom sector field if it exists
+      if (value !== 'Otro' && localFormData.sectorEconomicoOtro) {
+        setLocalFormData((prev) => ({
+          ...prev,
+          [field]: value,
+          sectorEconomicoOtro: ''
+        }));
+        return;
+      }
+    }
+
     setLocalFormData((prev) => ({ ...prev, [field]: value }));
 
     // Clear error if company name is filled
@@ -247,6 +268,24 @@ export function ZumaFormDialog({
                   </SelectContent>
                 </Select>
               </div>
+
+              {showOtherSectorInput && (
+                <div className='grid gap-2'>
+                  <Label
+                    htmlFor='sectorEconomicoOtro'
+                    className='font-medium text-blue-800'
+                  >
+                    Especifique el sector
+                  </Label>
+                  <Input
+                    id='sectorEconomicoOtro'
+                    value={localFormData.sectorEconomicoOtro || ''}
+                    onChange={(e) =>
+                      handleChange('sectorEconomicoOtro', e.target.value)
+                    }
+                  />
+                </div>
+              )}
 
               <div className='grid gap-2'>
                 <Label
