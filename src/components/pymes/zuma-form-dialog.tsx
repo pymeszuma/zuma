@@ -177,7 +177,7 @@ export function ZumaFormDialog({
 
   return (
     <Dialog open={showDialog} onOpenChange={handleOpenChange}>
-      <DialogContent className='max-w-4xl max-h-[90vh] overflow-y-auto'>
+      <DialogContent className='sm:max-w-[600px] md:max-w-[700px] max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <div className='flex justify-between items-center'>
             <div>

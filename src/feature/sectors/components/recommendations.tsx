@@ -48,7 +48,7 @@ export function Recommendations({ noAnswered }: RecommendationsProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Accordion type='single' collapsible className='space-y-2'>
+        <Accordion type='single' collapsible className='space-y-2 pb-5'>
           {noAnswered.map((recommendation, idx) => (
             <AccordionItem
               key={idx}
