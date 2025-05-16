@@ -7,6 +7,7 @@ import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { CSPostHogProvider } from '@/providers/posthog-provider';
 import { PymesMiddleware } from '@/components/pymes/middleware';
+import { FloatingManualButton } from '@/components/common/floating-manual-button';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
                 <div className='flex min-h-screen'>
                   <AppSidebar />
                   <main className='flex-1'>{children}</main>
+                  <FloatingManualButton />
                   <Toaster />
                 </div>
               </SidebarProvider>
