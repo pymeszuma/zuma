@@ -55,7 +55,7 @@ export const sectors = [
     path: '/sectors/services',
     description:
       'Evalúa cómo las empresas de servicios y comercio pueden sumarse a la acción climática y responder a las nuevas demandas del mercado sostenible',
-    isActive: false
+    isActive: true
   }
 ];
 
@@ -274,7 +274,7 @@ export const sectorForms = {
           'Reducción de viajes y logística sostenible'
         ],
         color: 'green',
-        url: '/sectors/energy-mining/mitigation'
+        url: '/sectors/services/mitigation'
       },
       {
         id: 'adaptación',
@@ -289,7 +289,7 @@ export const sectorForms = {
           'Comunicación en crisis'
         ],
         color: 'blue',
-        url: '/sectors/energy-mining/adaptability'
+        url: '/sectors/services/adaptability'
       }
     ]
   }
