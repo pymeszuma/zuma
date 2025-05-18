@@ -1,0 +1,1 @@
+ALTER TABLE "survey_response_items" ADD CONSTRAINT "survey_response_items_question_id_survey_questions_id_fk" FOREIGN KEY ("question_id") REFERENCES "public"."survey_questions"("id") ON DELETE cascade ON UPDATE no action;

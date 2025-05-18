@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { BookOpen, Building2, Home, Leaf } from 'lucide-react';
+import { BookOpen, Building2, FormInput, Home, Leaf } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -18,7 +18,7 @@ import {
   SidebarRail,
   useSidebar
 } from '@/components/ui/sidebar';
-import { ModeToggle } from '@/components/theme/mode-toggle';
+import { ModeToggle } from '@/providers/mode-toggle';
 import { sectors } from '@/feature/sectors/constants';
 import packageJson from '@/../package.json';
 import { EditZumaDataButton } from '@/components/pymes/edit-zuma-data-button';
@@ -178,6 +178,17 @@ export function AppSidebar() {
               <Link href='/references'>
                 <BookOpen className='h-4 w-4' />
                 <span>Referencias</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname?.startsWith('/dashboard')}
+            >
+              <Link href='/survey'>
+                <FormInput className='h-4 w-4' />
+                <span>Encuesta</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

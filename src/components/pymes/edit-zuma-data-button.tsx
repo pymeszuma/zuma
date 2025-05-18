@@ -1,16 +1,16 @@
 'use client';
 
 import { Building2, User } from 'lucide-react';
-import { useZuma } from '@/components/theme/zuma-context';
+import { useZuma } from '@/providers/zuma-context';
 import { useSidebar } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export function EditZumaDataButton() {
-  const { openDialog, isOnboarded, formData, reloadFormData } = useZuma();
+  const { openDialog, formData, reloadFormData } = useZuma();
   const { state: sidebarState } = useSidebar();
 
-  if (!isOnboarded || !formData?.nombreEmpresa) {
+  if (!formData?.nombreEmpresa) {
     return null;
   }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { useZuma } from '@/components/theme/zuma-context';
+import { useZuma } from '@/providers/zuma-context';
 import { CheckCircle2 } from 'lucide-react';
 
 export function OnboardingCompleteAlert() {

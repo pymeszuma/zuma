@@ -1,11 +1,12 @@
 import type React from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme/theme-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
+import { QueryProvider } from '@/providers/query-provider';
+import { CSPostHogProvider } from '@/providers/posthog-provider';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Toaster } from '@/components/ui/sonner';
-import { CSPostHogProvider } from '@/providers/posthog-provider';
 import { PymesMiddleware } from '@/components/pymes/middleware';
 import { FloatingManualButton } from '@/components/common/floating-manual-button';
 
@@ -32,16 +33,18 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <PymesMiddleware>
-              <SidebarProvider>
-                <div className='flex min-h-screen'>
-                  <AppSidebar />
-                  <main className='flex-1'>{children}</main>
-                  <FloatingManualButton />
-                  <Toaster />
-                </div>
-              </SidebarProvider>
-            </PymesMiddleware>
+            <QueryProvider>
+              <PymesMiddleware>
+                <SidebarProvider>
+                  <div className='flex min-h-screen'>
+                    <AppSidebar />
+                    <main className='flex-1'>{children}</main>
+                    <FloatingManualButton />
+                    <Toaster />
+                  </div>
+                </SidebarProvider>
+              </PymesMiddleware>
+            </QueryProvider>
           </ThemeProvider>
         </CSPostHogProvider>
       </body>

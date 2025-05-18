@@ -52,7 +52,11 @@ export function SurveyCard({
     return questions.slice(start, end);
   }, [currentPage, questions, questionsPerPage]);
 
-  const handleAnswer = (questionId: number, value: string) => {
+  const handleAnswer = (
+    questionId: number,
+    question: string,
+    value: string
+  ) => {
     const newAnswers = [...answers];
     const existingAnswerIndex = newAnswers.findIndex(
       (answer) => answer.questionId === questionId
@@ -61,7 +65,7 @@ export function SurveyCard({
     if (existingAnswerIndex !== -1) {
       newAnswers[existingAnswerIndex].value = value;
     } else {
-      newAnswers.push({ questionId, value });
+      newAnswers.push({ questionId, question, value });
     }
 
     setAnswers(newAnswers);
@@ -256,7 +260,9 @@ export function SurveyCard({
             <h3 className='text-lg font-medium'>{q.question}</h3>
             <RadioGroup
               value={getAnswer(q.id_actions)}
-              onValueChange={(value) => handleAnswer(q.id_actions, value)}
+              onValueChange={(value) =>
+                handleAnswer(q.id_actions, q.question, value)
+              }
               className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2'
             >
               {['Si', 'No', 'No Aplica', 'En proceso'].map((opt) => (

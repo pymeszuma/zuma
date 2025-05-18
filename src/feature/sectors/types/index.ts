@@ -21,5 +21,6 @@ export interface Question {
 
 export interface Answer {
   questionId: number;
+  question: string;
   value: string;
 }
