@@ -17,7 +17,7 @@ export function FloatingManualButton() {
     <>
       <Button
         onClick={() => setOpen(true)}
-        className='fixed top-6 right-6 z-50 flex items-center gap-2 rounded-full shadow-lg cursor-pointer'
+        className='fixed top-4 right-6 z-50 flex items-center gap-2 rounded-full shadow-lg cursor-pointer'
       >
         <Book className='h-4 w-4' />
         <span>Manual de Usuario</span>

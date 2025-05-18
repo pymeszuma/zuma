@@ -10,9 +10,28 @@ import {
 
 const app = new Hono()
 
-  // GET all survey response items
+  // GET all survey response items with optional filtering by headerId
   .get('/', async (c) => {
-    const data = await postgresqlDb.select().from(surveyResponseItems);
+    const { headerId } = c.req.query();
+
+    // Build the query
+    const queryBuilder = postgresqlDb.select();
+
+    // Execute query with or without headerId filter
+    let data;
+    if (headerId) {
+      const headerIdNum = parseInt(headerId);
+      if (!isNaN(headerIdNum)) {
+        data = await queryBuilder
+          .from(surveyResponseItems)
+          .where(eq(surveyResponseItems.headerId, headerIdNum));
+      } else {
+        return c.json({ error: 'Invalid headerId format' }, 400);
+      }
+    } else {
+      data = await queryBuilder.from(surveyResponseItems);
+    }
+
     return c.json({ data });
   })
 

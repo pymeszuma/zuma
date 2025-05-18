@@ -4,9 +4,14 @@ import { ContentLayout } from '@/components/panel/content-layout';
 import { SurveyCard } from '@/feature/sectors/components/survey-card';
 import questions from '@/feature/sectors/data/sector-5-adaptacion.json' assert { type: 'json' };
 import { useCreateSurveyResponse } from '@/feature/sectors/api/use-create-survey-response';
+import { useGetSurveyResponses } from '@/feature/sectors/api/use-get-survey-responses';
 
 export default function AgricultureAdaptabilityPage() {
   const createSurveyResponse = useCreateSurveyResponse(5, 'adaptacion');
+  const { data: surveyData, isLoading } = useGetSurveyResponses(
+    5,
+    'adaptacion'
+  );
 
   return (
     <ContentLayout
@@ -20,6 +25,10 @@ export default function AgricultureAdaptabilityPage() {
         onSubmit={(answers, score) => {
           createSurveyResponse.mutate({ answers, questions, score });
         }}
+        preloadedAnswers={surveyData?.answers}
+        preloadedScore={surveyData?.score}
+        hasSubmitted={surveyData?.hasSubmitted}
+        isLoading={isLoading}
       />
     </ContentLayout>
   );

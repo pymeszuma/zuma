@@ -1,6 +1,6 @@
 import 'server-only';
 import { Hono } from 'hono';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { zValidator } from '@hono/zod-validator';
 import { postgresqlDb } from '@/lib/db/index';
 import {
@@ -10,9 +10,51 @@ import {
 
 const app = new Hono()
 
-  // GET all survey response headers
+  // GET all survey response headers with optional filtering
   .get('/', async (c) => {
-    const data = await postgresqlDb.select().from(surveyResponseHeaders);
+    const { companyId, sectorId, surveyType } = c.req.query();
+
+    // Build the query with filters
+    const queryBuilder = postgresqlDb.select();
+
+    // Prepare conditions for filtering
+    const conditions = [];
+
+    if (companyId) {
+      const companyIdNum = parseInt(companyId);
+      if (!isNaN(companyIdNum)) {
+        conditions.push(eq(surveyResponseHeaders.companyId, companyIdNum));
+      }
+    }
+
+    if (sectorId) {
+      const sectorIdNum = parseInt(sectorId);
+      if (!isNaN(sectorIdNum)) {
+        conditions.push(eq(surveyResponseHeaders.sectorId, sectorIdNum));
+      }
+    }
+
+    if (surveyType && ['adaptacion', 'mitigacion'].includes(surveyType)) {
+      conditions.push(
+        eq(
+          surveyResponseHeaders.surveyType,
+          surveyType as 'adaptacion' | 'mitigacion'
+        )
+      );
+    }
+
+    // Execute the query with all conditions
+    let data;
+    if (conditions.length > 0) {
+      data = await queryBuilder
+        .from(surveyResponseHeaders)
+        .where(and(...conditions))
+        .orderBy(surveyResponseHeaders.createdAt);
+    } else {
+      data = await queryBuilder
+        .from(surveyResponseHeaders)
+        .orderBy(surveyResponseHeaders.createdAt);
+    }
     return c.json({ data });
   })
 

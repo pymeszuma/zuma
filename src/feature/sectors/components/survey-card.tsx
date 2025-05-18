@@ -1,7 +1,7 @@
 'use client';
 
 import { PieChart, Pie } from 'recharts';
-import { useState, useMemo, JSX } from 'react';
+import { useState, useMemo, JSX, useEffect } from 'react';
 import { AlertCircle, CheckCircle2, Clock, HelpCircle } from 'lucide-react';
 import {
   Card,
@@ -29,6 +29,10 @@ interface SurveyCardProps {
   description?: string;
   onSubmit?: (answers: Answer[], score: number) => void;
   questionsPerPage?: number;
+  preloadedAnswers?: Answer[];
+  preloadedScore?: number;
+  hasSubmitted?: boolean;
+  isLoading?: boolean;
 }
 
 export function SurveyCard({
@@ -36,12 +40,25 @@ export function SurveyCard({
   title = 'Encuesta',
   description = 'Responde las siguientes preguntas',
   onSubmit,
-  questionsPerPage = 5
+  questionsPerPage = 5,
+  preloadedAnswers = [],
+  preloadedScore = 0,
+  hasSubmitted = false,
+  isLoading = false
 }: SurveyCardProps) {
-  const [answers, setAnswers] = useState<Answer[]>([]);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<Answer[]>(preloadedAnswers);
+  const [isSubmitted, setIsSubmitted] = useState(hasSubmitted);
+  const [score, setScore] = useState(preloadedScore);
   const [currentPage, setCurrentPage] = useState(0);
+
+  // Set isSubmitted to true when hasSubmitted changes to true
+  useEffect(() => {
+    if (hasSubmitted && preloadedAnswers.length > 0) {
+      setIsSubmitted(true);
+      setAnswers(preloadedAnswers);
+      setScore(preloadedScore);
+    }
+  }, [hasSubmitted, preloadedAnswers, preloadedScore]);
 
   const totalPages = Math.ceil(questions.length / questionsPerPage);
   const progress = ((currentPage + 1) / totalPages) * 100;
@@ -229,10 +246,25 @@ export function SurveyCard({
               setIsSubmitted(false);
               setCurrentPage(0);
             }}
+            disabled={isSubmitted}
           >
             Volver
           </Button>
         </CardFooter>
+      </Card>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Card className='w-full'>
+        <CardHeader>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>Cargando respuestas anteriores...</CardDescription>
+        </CardHeader>
+        <CardContent className='flex justify-center items-center py-12'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary'></div>
+        </CardContent>
       </Card>
     );
   }
@@ -242,6 +274,12 @@ export function SurveyCard({
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
+        {hasSubmitted && (
+          <div className='mt-2 p-2 bg-green-50 border border-green-200 rounded-md text-green-700'>
+            Ya has completado esta encuesta anteriormente. Puedes revisar tus
+            respuestas o modificarlas si lo deseas.
+          </div>
+        )}
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mt-4'>
           <span className='text-sm text-muted-foreground'>
             Pregunta {currentPage * questionsPerPage + 1} de {questions.length}

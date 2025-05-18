@@ -127,7 +127,7 @@ export function ZumaFormDialog({
     return defaultFormData;
   });
 
-  const [hasCompanyData, setHasCompanyData] = useState(false);
+  const [_hasCompanyData, setHasCompanyData] = useState(false);
   const [errors, setErrors] = useState<{ nombreEmpresa?: string }>({});
   const [showOtherSectorInput, setShowOtherSectorInput] = useState(false);
 
@@ -161,34 +161,6 @@ export function ZumaFormDialog({
       }
     }
   }, []);
-
-  // Edit button handler
-  const openDialog = () => {
-    if (typeof window !== 'undefined') {
-      const data = localStorage.getItem(STORAGE_KEYS.COMPANY_DATA);
-      if (data) {
-        try {
-          const parsedData = JSON.parse(data);
-          // Merge with default data to ensure all fields are present
-          setLocalFormData({ ...defaultFormData, ...parsedData });
-          // Update sector input visibility
-          setShowOtherSectorInput(parsedData.sectorEconomico === 'Otro');
-        } catch (error) {
-          console.error('Error parsing company data:', error);
-          // Fallback to context data if localStorage parsing fails
-          if (formData) {
-            setLocalFormData({ ...defaultFormData, ...formData });
-            setShowOtherSectorInput(formData.sectorEconomico === 'Otro');
-          }
-        }
-      } else if (formData) {
-        // If no localStorage data but context has data, use that
-        setLocalFormData({ ...defaultFormData, ...formData });
-        setShowOtherSectorInput(formData.sectorEconomico === 'Otro');
-      }
-    }
-    setShowDialog(true);
-  };
 
   // Helper to safely get number values for display
   const getNumberValue = (value: number | null | undefined): string => {

@@ -2,7 +2,6 @@ import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Answer } from '@/feature/sectors/types';
 import { client } from '@/lib/hono';
-import { InferRequestType } from 'hono';
 
 // Get company data and ID from local storage
 function getCompanyDataFromStorage() {
