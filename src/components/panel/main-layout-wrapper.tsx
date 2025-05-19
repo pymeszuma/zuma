@@ -9,6 +9,7 @@ import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { PymesMiddleware } from '@/components/pymes/middleware';
 import { FloatingManualButton } from '@/components/common/floating-manual-button';
+import { FloatingBubbleProvider } from '@/providers/floating-bubble-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
                     <AppSidebar />
                     <main className='flex-1'>{children}</main>
                     <FloatingManualButton />
+                    <FloatingBubbleProvider iframeUrl='https://docs.google.com/forms/d/e/1FAIpQLSfKNiB0sgcxW6ckluqfntdLYYQKBL9gNmuCR3ho7PhBLdzksg/viewform?embedded=true' />
                     <Toaster />
                   </div>
                 </SidebarProvider>

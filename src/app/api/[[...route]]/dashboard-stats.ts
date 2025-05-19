@@ -1,6 +1,6 @@
 import 'server-only';
 import { Hono } from 'hono';
-import { count, sql } from 'drizzle-orm';
+import { count } from 'drizzle-orm';
 import { postgresqlDb } from '@/lib/db/index';
 import { companiesInfo, surveyResponseHeaders } from '@/lib/db/schema';
 
