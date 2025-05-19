@@ -8,28 +8,51 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import {
-  BarChart3,
   PieChart,
-  LineChart,
   Download,
   Share2,
-  Building2,
-  ClipboardList,
-  CloudRain,
-  Factory
+  Users,
+  CheckCircle,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ContentLayout } from '@/components/panel/content-layout';
 import {
   useGetDashboardStats,
   DashboardStats,
-  SectorDistribution,
-  MonthlyData
 } from '@/feature/dashboard/api/use-get-dashboard-stats';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
+import {
+  ResponsiveContainer,
+  BarChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Bar
+} from 'recharts';
 
 export default function AdminDashboardPage() {
   const { data: rawStats, isLoading, error } = useGetDashboardStats();
   const stats = rawStats as DashboardStats | undefined;
+
+  const sectorChartData = stats?.sectorDistribution.map((item) => ({
+    name: item.sector || 'Sin Especificar',
+    value: item.count
+  }));
+
+  const handleDownloadCompanyData = (companyId: string) => {
+    const downloadUrl = `/api/download-company-csv/${companyId}`;
+    window.open(downloadUrl, '_blank');
+    console.log(`Descargando datos para empresa ID: ${companyId}`);
+  };
 
   return (
     <ContentLayout title='Dashboard' className='px-8 py-2'>
@@ -59,7 +82,7 @@ export default function AdminDashboardPage() {
               <CardTitle className='text-sm font-medium'>
                 Empresas Registradas
               </CardTitle>
-              <Building2 className='h-4 w-4 text-muted-foreground' />
+              <Users className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
@@ -82,7 +105,7 @@ export default function AdminDashboardPage() {
               <CardTitle className='text-sm font-medium'>
                 Encuestas Completadas
               </CardTitle>
-              <ClipboardList className='h-4 w-4 text-muted-foreground' />
+              <CheckCircle className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
@@ -105,7 +128,7 @@ export default function AdminDashboardPage() {
               <CardTitle className='text-sm font-medium'>
                 Encuestas de Adaptación
               </CardTitle>
-              <CloudRain className='h-4 w-4 text-muted-foreground' />
+              <ShieldCheck className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
@@ -128,7 +151,7 @@ export default function AdminDashboardPage() {
               <CardTitle className='text-sm font-medium'>
                 Encuestas de Mitigación
               </CardTitle>
-              <Factory className='h-4 w-4 text-muted-foreground' />
+              <Zap className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
@@ -166,35 +189,27 @@ export default function AdminDashboardPage() {
                 <div className='h-[300px] bg-gray-100 rounded-lg flex items-center justify-center'>
                   <p className='text-red-500'>Error al cargar los datos</p>
                 </div>
-              ) : stats?.sectorDistribution &&
-                stats.sectorDistribution.length > 0 ? (
-                <div className='h-[300px]'>
-                  <div className='h-full flex flex-col justify-center'>
-                    {stats.sectorDistribution.map(
-                      (item: SectorDistribution, index: number) => (
-                        <div key={index} className='mb-4'>
-                          <div className='flex items-center justify-between mb-1'>
-                            <span className='text-sm font-medium'>
-                              {item.sector || 'Sin especificar'}
-                            </span>
-                            <span className='text-sm text-muted-foreground'>
-                              {item.count} empresas
-                            </span>
-                          </div>
-                          <div className='h-2 w-full rounded-full bg-muted'>
-                            <div
-                              className='h-2 rounded-full bg-primary'
-                              style={{
-                                width: `${(item.count / stats.companiesCount) * 100}%`,
-                                minWidth: '5%'
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
+              ) : sectorChartData && sectorChartData.length > 0 ? (
+                <ResponsiveContainer width='100%' height={350}>
+                  <BarChart data={sectorChartData}>
+                    <XAxis
+                      dataKey='name'
+                      stroke='#888888'
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis
+                      stroke='#888888'
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                      tickFormatter={(value) => `${value}`}
+                    />
+                    <Tooltip />
+                    <Bar dataKey='value' fill='#2563eb' radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               ) : (
                 <div className='h-[300px] bg-gray-100 rounded-lg flex flex-col items-center justify-center text-muted-foreground'>
                   <PieChart className='h-8 w-8 mb-4' />
@@ -203,166 +218,66 @@ export default function AdminDashboardPage() {
               )}
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Estadísticas de Encuestas</CardTitle>
-              <CardDescription>Progreso de encuestas por mes</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className='h-[300px] bg-gray-100 rounded-lg flex items-center justify-center'>
-                  <p className='text-muted-foreground animate-pulse'>
-                    Cargando datos...
-                  </p>
-                </div>
-              ) : error ? (
-                <div className='h-[300px] bg-gray-100 rounded-lg flex items-center justify-center'>
-                  <p className='text-red-500'>Error al cargar los datos</p>
-                </div>
-              ) : stats?.monthlySurveyData &&
-                stats.monthlySurveyData.length > 0 ? (
-                <div className='h-[300px]'>
-                  <div className='h-full flex flex-col justify-end space-y-6'>
-                    <div className='grid grid-cols-12 gap-2 items-end h-[220px]'>
-                      {stats.monthlySurveyData.map(
-                        (item: MonthlyData, index: number) => {
-                          // Calculate height percentage based on max count in the dataset
-                          const maxCount = Math.max(
-                            ...stats.monthlySurveyData.map(
-                              (d: MonthlyData) => d.count
-                            )
-                          );
-                          const heightPercentage =
-                            maxCount > 0 ? (item.count / maxCount) * 100 : 0;
-
-                          return (
-                            <div
-                              key={index}
-                              className='flex flex-col items-center h-full'
-                            >
-                              <div
-                                className='w-full bg-primary rounded-t-md'
-                                style={{
-                                  height: `${Math.max(heightPercentage, 5)}%`,
-                                  minHeight: '20px'
-                                }}
-                              ></div>
-                              <span className='text-xs text-muted-foreground mt-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full'>
-                                {item.month}
-                              </span>
-                            </div>
-                          );
-                        }
-                      )}
-                    </div>
-                    <div className='flex justify-between'>
-                      <span className='text-xs text-muted-foreground'>
-                        Todas las encuestas
-                      </span>
-                      <span className='text-xs text-muted-foreground'>
-                        Total: {stats.submittedSurveysCount}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className='h-[300px] bg-gray-100 rounded-lg flex flex-col items-center justify-center text-muted-foreground'>
-                  <BarChart3 className='h-8 w-8 mb-4' />
-                  <p>No hay datos mensuales disponibles</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
         </div>
 
         <div className='mt-6'>
           <Card>
-            <CardHeader>
-              <CardTitle>Tendencia de Registro</CardTitle>
-              <CardDescription>
-                Tendencia de registro de empresas a lo largo del tiempo
-              </CardDescription>
+            <CardHeader className='flex flex-row items-center justify-between'>
+              <div>
+                <CardTitle>Empresas Registradas</CardTitle>
+                <CardDescription>
+                  Lista de todas las empresas registradas en la plataforma.
+                </CardDescription>
+              </div>
             </CardHeader>
             <CardContent>
-              {isLoading ? (
-                <div className='h-[300px] mt-4 bg-gray-100 rounded-lg flex items-center justify-center'>
-                  <p className='text-muted-foreground animate-pulse'>
-                    Cargando datos...
-                  </p>
-                </div>
-              ) : error ? (
-                <div className='h-[300px] mt-4 bg-gray-100 rounded-lg flex items-center justify-center'>
-                  <p className='text-red-500'>Error al cargar los datos</p>
-                </div>
-              ) : stats?.registrationTrends &&
-                stats.registrationTrends.length > 0 ? (
-                <div className='h-[300px] mt-4 relative'>
-                  <div className='absolute inset-0 flex items-end pb-12'>
-                    <div className='w-full h-full flex flex-col'>
-                      <div className='flex-1 flex items-end'>
-                        <div className='w-full flex items-end space-x-2'>
-                          {stats.registrationTrends.map(
-                            (item: MonthlyData, i: number) => {
-                              // Calculate height percentage based on max count
-                              const maxCount = Math.max(
-                                ...stats.registrationTrends.map(
-                                  (d: MonthlyData) => d.count
-                                )
-                              );
-                              const heightPercentage =
-                                maxCount > 0
-                                  ? (item.count / maxCount) * 100
-                                  : 0;
-
-                              return (
-                                <div
-                                  key={i}
-                                  className='flex-1 flex flex-col items-center h-full'
-                                >
-                                  <div className='w-full flex flex-col items-center justify-end h-full'>
-                                    <div
-                                      className='w-full rounded-md bg-sky-500 relative group'
-                                      style={{
-                                        height: `${Math.max(heightPercentage, 5)}%`,
-                                        minHeight: '20px'
-                                      }}
-                                    >
-                                      <div className='opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs rounded px-2 py-1 transition-opacity duration-300'>
-                                        {item.count} empresas
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <span
-                                    className='text-xs text-muted-foreground mt-2 whitespace-nowrap overflow-hidden text-ellipsis'
-                                    style={{ maxWidth: '60px' }}
-                                  >
-                                    {item.month}
-                                  </span>
-                                </div>
-                              );
+              {stats &&
+              stats.companiesList &&
+              stats.companiesList.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nombre de la Empresa</TableHead>
+                      <TableHead>Sector</TableHead>
+                      <TableHead>Email de Contacto</TableHead>
+                      <TableHead>Fecha de Registro</TableHead>
+                      <TableHead className='text-right'>Acciones</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {stats.companiesList.map((company) => (
+                      <TableRow key={company.id}>
+                        <TableCell>{company.companyName}</TableCell>
+                        <TableCell>{company.sector}</TableCell>
+                        <TableCell>{company.userEmail}</TableCell>
+                        <TableCell>
+                          {new Date(company.createdAt).toLocaleDateString(
+                            'es-ES',
+                            {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
                             }
                           )}
-                        </div>
-                      </div>
-                      <div className='h-12 w-full flex items-center border-t border-gray-200 mt-2'>
-                        <div className='w-full flex justify-between'>
-                          <span className='text-xs text-muted-foreground'>
-                            Todos los registros
-                          </span>
-                          <span className='text-xs text-muted-foreground'>
-                            Total: {stats.companiesCount}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                        </TableCell>
+                        <TableCell className='text-right'>
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            onClick={() =>
+                              handleDownloadCompanyData(company.id)
+                            }
+                          >
+                            <Download className='mr-2 h-4 w-4' />
+                            Descargar CSV
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               ) : (
-                <div className='h-[300px] mt-4 bg-gray-100 rounded-lg flex flex-col items-center justify-center text-muted-foreground'>
-                  <LineChart className='h-8 w-8 mb-4' />
-                  <p>No hay datos de tendencia disponibles</p>
-                </div>
+                <p>No hay empresas registradas para mostrar.</p>
               )}
             </CardContent>
           </Card>

@@ -1,182 +1,94 @@
-import 'server-only';
 import { Hono } from 'hono';
-import { count } from 'drizzle-orm';
-import { postgresqlDb } from '@/lib/db/index';
-import { companiesInfo, surveyResponseHeaders } from '@/lib/db/schema';
+import { postgresqlDb } from '@/lib/db/index'; // Corrected import for db
+import {
+  companiesInfo,
+  surveyResponseHeaders
+} from '@/lib/db/schema';
+import { desc, eq } from 'drizzle-orm';
 
-const app = new Hono()
-  // GET dashboard statistics
-  .get('/', async (c) => {
-    try {
-      // Get total companies count
-      const [companiesCount] = await postgresqlDb
-        .select({ value: count() })
-        .from(companiesInfo);
+// Define a type for the company object returned by the query, matching schema definition
+interface CompanyQueryResult {
+  id: number; // Assuming id is serial, hence number
+  nombreEmpresa: string;
+  sectorEconomico: string | null;
+  correoElectronico: string | null;
+  createdAt: Date;
+}
 
-      // Get all company data for registrations trend
-      const companies = await postgresqlDb
-        .select({
-          id: companiesInfo.id,
-          createdAt: companiesInfo.createdAt,
-          sectorEconomico: companiesInfo.sectorEconomico
-        })
-        .from(companiesInfo);
+const app = new Hono().get('/', async (c) => {
+  try {
+    // Use property names as defined in schema.ts for the select object
+    const allCompanies: CompanyQueryResult[] = await postgresqlDb
+      .select({
+        id: companiesInfo.id,
+        nombreEmpresa: companiesInfo.nombreEmpresa,
+        sectorEconomico: companiesInfo.sectorEconomico,
+        correoElectronico: companiesInfo.correoElectronico,
+        createdAt: companiesInfo.createdAt
+      })
+      .from(companiesInfo)
+      .orderBy(desc(companiesInfo.createdAt));
 
-      // Get all survey responses in a single query
-      const surveyResponses = await postgresqlDb
-        .select({
-          id: surveyResponseHeaders.id,
-          status: surveyResponseHeaders.status,
-          surveyType: surveyResponseHeaders.surveyType,
-          submittedAt: surveyResponseHeaders.submittedAt
-        })
-        .from(surveyResponseHeaders);
+    const allSurveyHeaders: Array<{
+      surveyType: 'adaptacion' | 'mitigacion' | null;
+      status: string | null;
+    }> = await postgresqlDb
+      .select({
+        surveyType: surveyResponseHeaders.surveyType,
+        status: surveyResponseHeaders.status
+      })
+      .from(surveyResponseHeaders)
+      .where(eq(surveyResponseHeaders.status, 'submitted'));
 
-      // Process survey data in TypeScript
-      const submittedSurveysCount = surveyResponses.filter(
-        (survey) => survey.status === 'submitted'
-      ).length;
+    const companiesCount = allCompanies.length;
+    const submittedSurveysCount = allSurveyHeaders.length;
 
-      const adaptationSurveysCount = surveyResponses.filter(
-        (survey) => survey.surveyType === 'adaptacion'
-      ).length;
+    const adaptationSurveysCount = allSurveyHeaders.filter(
+      (s) => s.surveyType === 'adaptacion'
+    ).length;
 
-      const mitigationSurveysCount = surveyResponses.filter(
-        (survey) => survey.surveyType === 'mitigacion'
-      ).length;
+    const mitigationSurveysCount = allSurveyHeaders.filter(
+      (s) => s.surveyType === 'mitigacion'
+    ).length;
 
-      // Group submitted surveys by month for the chart
-      const submittedSurveysByMonth = surveyResponses
-        .filter((survey) => survey.status === 'submitted' && survey.submittedAt)
-        .reduce(
-          (acc, survey) => {
-            const submittedAt = new Date(String(survey.submittedAt));
-            const monthKey = `${submittedAt.getFullYear()}-${submittedAt.getMonth() + 1}`;
+    const sectorCounts: Record<string, number> = {};
+    allCompanies.forEach((company: CompanyQueryResult) => {
+      const sector = company.sectorEconomico || 'Sin especificar';
+      sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
+    });
+    const sectorDistribution = Object.entries(sectorCounts)
+      .map(([sector, countVal]) => ({
+        sector,
+        count: countVal
+      }))
+      .sort((a, b) => b.count - a.count);
 
-            if (!acc[monthKey]) {
-              acc[monthKey] = {
-                month: submittedAt,
-                count: 0
-              };
-            }
+    // Prepare companiesList for the frontend, ensuring id is string if needed by CompanyData type
+    const companiesList = allCompanies.map((company: CompanyQueryResult) => ({
+      id: company.id.toString(), // Convert id to string to match CompanyData type
+      companyName: company.nombreEmpresa || 'N/A',
+      sector: company.sectorEconomico || 'Sin especificar',
+      userEmail: company.correoElectronico || 'N/A', // Use correoElectronico
+      createdAt: company.createdAt ? company.createdAt.toISOString() : 'N/A'
+    }));
 
-            acc[monthKey].count++;
-            return acc;
-          },
-          {} as Record<string, { month: Date; count: number }>
-        );
-
-      // Convert to array and sort by date
-      const monthlySurveyData = Object.values(submittedSurveysByMonth).sort(
-        (a, b) => a.month.getTime() - b.month.getTime()
-      );
-
-      // Group companies by month of registration
-      const registrationsByMonth = companies
-        .filter((company) => company.createdAt)
-        .reduce(
-          (acc, company) => {
-            const createdAt = new Date(String(company.createdAt));
-            const monthKey = `${createdAt.getFullYear()}-${createdAt.getMonth() + 1}`;
-
-            if (!acc[monthKey]) {
-              acc[monthKey] = {
-                month: createdAt,
-                count: 0
-              };
-            }
-
-            acc[monthKey].count++;
-            return acc;
-          },
-          {} as Record<string, { month: Date; count: number }>
-        );
-
-      // Convert to array and sort by date
-      const monthlyRegistrations = Object.values(registrationsByMonth).sort(
-        (a, b) => a.month.getTime() - b.month.getTime()
-      );
-
-      // Calculate sector distribution
-      const sectorCounts = companies.reduce(
-        (acc, company) => {
-          const sector = company.sectorEconomico || 'No especificado';
-          if (!acc[sector]) {
-            acc[sector] = 0;
-          }
-          acc[sector]++;
-          return acc;
-        },
-        {} as Record<string, number>
-      );
-
-      const sectorDistribution = Object.entries(sectorCounts)
-        .filter(([sector]) => sector !== 'No especificado')
-        .map(([sector, count]) => ({
-          sector,
-          count
-        }));
-
-      // Format monthly data with month names
-      const formattedMonthlyData = monthlySurveyData.map((item) => {
-        const monthNames = [
-          'Enero',
-          'Febrero',
-          'Marzo',
-          'Abril',
-          'Mayo',
-          'Junio',
-          'Julio',
-          'Agosto',
-          'Septiembre',
-          'Octubre',
-          'Noviembre',
-          'Diciembre'
-        ];
-        return {
-          month: `${monthNames[item.month.getMonth()]}`,
-          count: item.count
-        };
-      });
-
-      // Format registration trends data
-      const formattedRegistrationTrends = monthlyRegistrations.map((item) => {
-        const monthNames = [
-          'Enero',
-          'Febrero',
-          'Marzo',
-          'Abril',
-          'Mayo',
-          'Junio',
-          'Julio',
-          'Agosto',
-          'Septiembre',
-          'Octubre',
-          'Noviembre',
-          'Diciembre'
-        ];
-        return {
-          month: `${monthNames[item.month.getMonth()]}`,
-          count: item.count
-        };
-      });
-
-      // Return all statistics
-      return c.json({
-        data: {
-          companiesCount: companiesCount.value,
-          submittedSurveysCount,
-          adaptationSurveysCount,
-          mitigationSurveysCount,
-          sectorDistribution,
-          monthlySurveyData: formattedMonthlyData,
-          registrationTrends: formattedRegistrationTrends
-        }
-      });
-    } catch (error) {
-      console.error('Error fetching dashboard statistics:', error);
-      return c.json({ error: 'Error fetching dashboard statistics' }, 500);
-    }
-  });
+    return c.json({
+      companiesCount,
+      submittedSurveysCount,
+      adaptationSurveysCount,
+      mitigationSurveysCount,
+      sectorDistribution,
+      companiesList
+    });
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error);
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    return c.json(
+      { error: 'Failed to fetch dashboard statistics', details: errorMessage },
+      500
+    );
+  }
+});
 
 export default app;

@@ -7,6 +7,7 @@ import surveyQuestions from './survey-questions';
 import surveyResponseHeaders from './survey-response-headers';
 import surveyResponseItems from './survey-response-items';
 import dashboardStats from './dashboard-stats';
+import downloadCompanyCsvRoute from './download-company-csv'; // Corrected import for default export
 
 const app = new Hono().basePath('/api');
 
@@ -15,7 +16,8 @@ const _routes = app
   .route('/survey-questions', surveyQuestions)
   .route('/survey-response-headers', surveyResponseHeaders)
   .route('/survey-response-items', surveyResponseItems)
-  .route('/dashboard-stats', dashboardStats);
+  .route('/dashboard-stats', dashboardStats)
+  .route('/download-company-csv', downloadCompanyCsvRoute);
 
 export const GET = handle(app);
 export const POST = handle(app);
