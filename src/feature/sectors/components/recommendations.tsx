@@ -31,10 +31,13 @@ import type { Question } from '@/feature/sectors/types';
 
 interface RecommendationsProps {
   noAnswered: Question[];
+  isExportingPdf?: boolean;
 }
 
-export function Recommendations({ noAnswered }: RecommendationsProps) {
+export function Recommendations({ noAnswered, isExportingPdf = false }: RecommendationsProps) {
   if (noAnswered.length === 0) return null;
+
+  const allItemValues = noAnswered.map((_, idx) => `item-${idx}`);
 
   return (
     <Card className='w-full shadow-sm'>
@@ -48,7 +51,11 @@ export function Recommendations({ noAnswered }: RecommendationsProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Accordion type='single' collapsible className='space-y-2 pb-5'>
+        <Accordion
+          type='multiple'
+          className='space-y-2 pb-5'
+          defaultValue={isExportingPdf ? allItemValues : undefined}
+        >
           {noAnswered.map((recommendation, idx) => (
             <AccordionItem
               key={idx}

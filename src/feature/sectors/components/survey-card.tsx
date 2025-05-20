@@ -236,7 +236,7 @@ export function SurveyCard({
           {/* CHARTS */}
 
           {/* RECOMMENDATIONS */}
-          <Recommendations noAnswered={noAnswered} />
+          <Recommendations noAnswered={noAnswered} isExportingPdf={true} />
 
           {/* RECOMMENDATIONS */}
         </CardContent>
