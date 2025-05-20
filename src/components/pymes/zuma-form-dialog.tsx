@@ -27,6 +27,7 @@ import {
 import { ZumaLogo } from '@/components/common/zuma-logo';
 
 const sectorOptions = [
+  'Energía',
   'Agricultura',
   'Comercio',
   'Construcción',

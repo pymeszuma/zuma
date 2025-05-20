@@ -240,7 +240,7 @@ export function SurveyCard({
 
           {/* RECOMMENDATIONS */}
         </CardContent>
-        <CardFooter>
+        {/* <CardFooter>
           <Button
             onClick={() => {
               setIsSubmitted(false);
@@ -250,7 +250,7 @@ export function SurveyCard({
           >
             Volver
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     );
   }
